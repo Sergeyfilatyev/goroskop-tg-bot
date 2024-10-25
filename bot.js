@@ -3,12 +3,18 @@ require("dotenv").config();
 const horoscopes = require("./horoscopes.json");
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
+const ch1 = process.env.CH_1;
+const ch2 = process.env.CH_1;
+const ch3 = process.env.CH_1;
+const link1 = process.env.LINK_1;
+const link2 = process.env.LINK_2;
+const link3 = process.env.LINK_3;
 
 const userData = {};
 const channelInfo = {
-  "@+LkTE_T5S1d41ZTU6": "Я люблю",
-  "@+QoWXHsEx-Z05NDFi": "Я хочу",
-  "@+maNNf11LQ4g5ZWE6": "Гороскоп | OK",
+  [link1]: "Я люблю",
+  [link2]: "Я хочу",
+  [link3]: "Гороскоп | OK",
 };
 // Устанавливаем команды бота
 bot.telegram.setMyCommands([
@@ -173,11 +179,12 @@ bot.action(/option_(.+)/, async (ctx) => {
 
   // Отправляем промежуточные сообщения
   await ctx.reply("🔮 Связываемся со звездами...");
-  await new Promise((resolve) => setTimeout(resolve, 1100));
+  await new Promise((resolve) => setTimeout(resolve, 1000));
   await ctx.reply("✨ Вычисляем вашу судьбу...");
-  await new Promise((resolve) => setTimeout(resolve, 1100));
+  await new Promise((resolve) => setTimeout(resolve, 1000));
 
   // Предлагаем подписаться на каналы
+
   await ctx.reply(
     "Пожалуйста, подпишитесь на следующие каналы, чтобы получить ваш гороскоп:",
     {
@@ -185,16 +192,16 @@ bot.action(/option_(.+)/, async (ctx) => {
         inline_keyboard: [
           [
             {
-              text: `${channelInfo["@+LkTE_T5S1d41ZTU6"]}`,
-              url: "https://t.me/+LkTE_T5S1d41ZTU6",
+              text: `${channelInfo[link1]}`,
+              url: `https://t.me/${link1.replace("@", "")}`,
             },
             {
-              text: `${channelInfo["@+QoWXHsEx-Z05NDFi"]}`,
-              url: "https://t.me/+QoWXHsEx-Z05NDFi",
+              text: `${channelInfo[link2]}`,
+              url: `https://t.me/${link2.replace("@", "")}`,
             },
             {
-              text: `${channelInfo["@+maNNf11LQ4g5ZWE6"]}`,
-              url: "https://t.me/+maNNf11LQ4g5ZWE6",
+              text: `${channelInfo[link3]}`,
+              url: `https://t.me/${link3.replace("@", "")}`,
             },
           ],
           [{ text: "✅ Я подписался", callback_data: "subscribed" }],
@@ -211,7 +218,7 @@ bot.action("subscribed", async (ctx) => {
   const userId = ctx.from.id;
   const user = userData[userId];
 
-  const requiredChannels = ["@i_loveeeitttt", "@iwantyoulav", "@g0rosk0p"];
+  const requiredChannels = [ch1, ch2, ch3];
 
   // Проверяем подписку на каждый канал
   let notSubscribedChannels = [];
@@ -274,7 +281,9 @@ bot.action("subscribed", async (ctx) => {
         horoscopesList[Math.floor(Math.random() * horoscopesList.length)];
 
       // Отправляем гороскоп
-      await ctx.reply(`\n✨${horoscope}✨`);
+      await ctx.reply(
+        `\nИндивидуальный гороскоп только для тебя🧡\n\n✨${horoscope}✨\n `
+      );
     } else {
       await ctx.reply("К сожалению, гороскопы для вашей категории не найдены.");
     }
@@ -285,7 +294,7 @@ bot.action("subscribed", async (ctx) => {
 Пользователь: @${ctx.from.username || "Не указан"}
 ID: ${ctx.from.id}
 Знак зодиака: ${zodiacSign}
-Пол: ${gender === "male" ? "Мужской" : "Женский"}
+Пол: ${gender === "male" ? "Муж" : "Жен"}
 Возраст: ${age}
 Выбранная опция: ${category}`;
 
@@ -331,6 +340,7 @@ function restartBot(ctx) {
 
 bot.launch();
 console.log("Бот запущен");
+console.log(link1);
 
 process.once("SIGINT", () => bot.stop("SIGINT"));
 process.once("SIGTERM", () => bot.stop("SIGTERM"));
