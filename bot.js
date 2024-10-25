@@ -12,9 +12,9 @@ const link3 = process.env.LINK_3;
 
 const userData = {};
 const channelInfo = {
-  [link1]: "Я люблю",
-  [link2]: "Я хочу",
-  [link3]: "Гороскоп | OK",
+  [ch1]: { link: link1, name: "Я люблю" },
+  [ch2]: { link: link2, name: "Я хочу" },
+  [ch3]: { link: link3, name: "Гороскоп | OK" },
 };
 // Устанавливаем команды бота
 bot.telegram.setMyCommands([
@@ -124,10 +124,8 @@ bot.on("text", (ctx) => {
     const age = parseInt(text);
     if (isNaN(age)) {
       ctx.reply("Пожалуйста, введите корректный возраст.");
-    } else if (age < 7) {
-      ctx.reply(
-        "Возраст должен быть не менее 7 лет. Пожалуйста, введите корректный возраст."
-      );
+    } else if (age < 7 || age > 110) {
+      ctx.reply("Пожалуйста, введите корректный возраст.");
     } else {
       userData[userId].age = age;
 
@@ -192,16 +190,16 @@ bot.action(/option_(.+)/, async (ctx) => {
         inline_keyboard: [
           [
             {
-              text: `${channelInfo[link1]}`,
-              url: `https://t.me/${link1.replace("@", "")}`,
+              text: `${channelInfo[ch1].name}`,
+              url: `https://t.me/${channelInfo[ch1].link.replace("@", "")}`,
             },
             {
-              text: `${channelInfo[link2]}`,
-              url: `https://t.me/${link2.replace("@", "")}`,
+              text: `${channelInfo[ch2].name}`,
+              url: `https://t.me/${channelInfo[ch2].link.replace("@", "")}`,
             },
             {
-              text: `${channelInfo[link3]}`,
-              url: `https://t.me/${link3.replace("@", "")}`,
+              text: `${channelInfo[ch3].name}`,
+              url: `https://t.me/${channelInfo[ch3].link.replace("@", "")}`,
             },
           ],
           [{ text: "✅ Я подписался", callback_data: "subscribed" }],
@@ -243,8 +241,8 @@ bot.action("subscribed", async (ctx) => {
         reply_markup: {
           inline_keyboard: [
             notSubscribedChannels.map((channel) => ({
-              text: `${channelInfo[channel]}`,
-              url: `https://t.me/${channel.replace("@", "")}`,
+              text: `${channelInfo[channel].name}`,
+              url: `https://t.me/${channelInfo[channel].link.replace("@", "")}`,
             })),
             [{ text: "✅ Я подписался", callback_data: "subscribed" }],
             [{ text: "🔙 Вернуться в главное меню", callback_data: "restart" }],
