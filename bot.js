@@ -340,7 +340,6 @@ function restartBot(ctx) {
 
 bot.launch();
 console.log("Бот запущен");
-console.log(link1);
 
 process.once("SIGINT", () => bot.stop("SIGINT"));
 process.once("SIGTERM", () => bot.stop("SIGTERM"));
