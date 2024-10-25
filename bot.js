@@ -4,8 +4,8 @@ const horoscopes = require("./horoscopes.json");
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
 const ch1 = process.env.CH_1;
-const ch2 = process.env.CH_1;
-const ch3 = process.env.CH_1;
+const ch2 = process.env.CH_2;
+const ch3 = process.env.CH_3;
 const link1 = process.env.LINK_1;
 const link2 = process.env.LINK_2;
 const link3 = process.env.LINK_3;
