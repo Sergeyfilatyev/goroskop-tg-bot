@@ -137,7 +137,7 @@ bot.on("text", (ctx) => {
             [{ text: "📅 Гороскоп на год", callback_data: "option_year" }],
             [
               {
-                text: "💞 Знак судьбы",
+                text: "💞 Кто твоя судьба?",
                 callback_data: "option_destiny",
               },
             ],
@@ -154,7 +154,7 @@ bot.on("text", (ctx) => {
           [{ text: "📅 Гороскоп на год", callback_data: "option_year" }],
           [
             {
-              text: "💞 Знак судьбы",
+              text: "💞 Кто твоя судьба?",
               callback_data: "option_destiny",
             },
           ],
