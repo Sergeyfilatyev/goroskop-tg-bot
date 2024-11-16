@@ -2,7 +2,7 @@ const { Telegraf } = require("telegraf");
 require("dotenv").config();
 const horoscopes = require("./horoscopes.json");
 
-const bot = new Telegraf(process.env.BOT_TOKEN);
+const bot = new Telegraf(process.env.BOT_TOKEN_TEST);
 const ch1 = process.env.CH_1;
 const ch2 = process.env.CH_2;
 const ch3 = process.env.CH_3;
