@@ -2,7 +2,7 @@ const { Telegraf } = require("telegraf");
 require("dotenv").config();
 const horoscopes = require("./horoscopes.json");
 
-const bot = new Telegraf(process.env.BOT_TOKEN_TEST);
+const bot = new Telegraf(process.env.BOT_TOKEN);
 const ch1 = process.env.CH_1;
 const ch2 = process.env.CH_2;
 const ch3 = process.env.CH_3;
@@ -12,8 +12,8 @@ const link3 = process.env.LINK_3;
 
 const userData = {};
 const channelInfo = {
-  [ch1]: { link: link1, name: "Я люблю" },
-  [ch2]: { link: link2, name: "Я хочу" },
+  [ch1]: { link: link1, name: "Секреты молодости" },
+  [ch2]: { link: link2, name: "HOT NEWS" },
   [ch3]: { link: link3, name: "Гороскоп | OK" },
 };
 // Устанавливаем команды бота
